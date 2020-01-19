@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CraftingPanels : MonoBehaviour, IDropHandler {
+public class CraftingPanels : MonoBehaviour, IDropHandler, IBeginDragHandler {
     public sbyte slotNumber;
     public bool canBePlacedIn;
 
@@ -12,7 +12,6 @@ public class CraftingPanels : MonoBehaviour, IDropHandler {
     }
 
     public void OnDrop(PointerEventData eventDate) {
-        print("hello");
         if (Crafting.inst.mouseHoldingItem != null && canBePlacedIn) {
             GameObject itemObject = Crafting.inst.mouseHoldingItem.itemObject;
             RectTransform rectTransform = itemObject.GetComponent<RectTransform>();
@@ -20,8 +19,16 @@ public class CraftingPanels : MonoBehaviour, IDropHandler {
             itemObject.transform.SetParent(transform);
             itemObject.transform.position = transform.position;
 
-            Crafting.inst.SetSlot(slotNumber, Crafting.inst.mouseHoldingItem);
+            Crafting.inst.SetInputSlot(slotNumber, Crafting.inst.mouseHoldingItem);
             Crafting.inst.mouseHoldingItem = null;
+            Crafting.inst.triedCraftingRecipe = false;
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventDate) {
+        if (Crafting.inst.GetInputSlot(slotNumber) != null) {
+            Crafting.inst.SetInputSlot(slotNumber, null);
+            Crafting.inst.triedCraftingRecipe = false;
         }
     }
 }

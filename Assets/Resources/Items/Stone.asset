@@ -15,5 +15,6 @@ MonoBehaviour:
   name: Stone
   sprite: {fileID: 2800000, guid: d48e38c83069cde48af121e1b81f15f3, type: 3}
   discoverDescription: 
-  discoverTitle: 
+  recipes:
+  - {fileID: 11400000, guid: 9ab4945c89aa9e74e959716af3163530, type: 2}
   itemObject: {fileID: 0}

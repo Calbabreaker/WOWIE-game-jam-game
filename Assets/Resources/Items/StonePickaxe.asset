@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a630f8ed7c54f4facea6919fbf01fe, type: 3}
   m_Name: StonePickaxe
   m_EditorClassIdentifier: 
-  name: StonePickaxe
+  name: Stone Pickaxe
   sprite: {fileID: 2800000, guid: d3a72b898b4e7aa45b370c00cb6c253a, type: 3}
-  discoverTitle: 
   discoverDescription: 
+  recipes: []
   itemObject: {fileID: 0}

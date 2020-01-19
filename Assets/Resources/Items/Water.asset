@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Water
   sprite: {fileID: 2800000, guid: 462cdd649fef8bd408cbb2df62da53fd, type: 3}
   discoverDescription: 
-  discoverTitle: 
+  recipes: []
   itemObject: {fileID: 0}
