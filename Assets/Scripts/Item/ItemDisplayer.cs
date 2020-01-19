@@ -5,6 +5,7 @@ using TMPro;
 public class ItemDisplayer : MonoBehaviour {
     [HideInInspector] public TextMeshProUGUI nameTMP;
     [HideInInspector] public RawImage imageRenderer;
+    private DragHandler dragHandler;
 
     public Item item;
 
@@ -12,8 +13,15 @@ public class ItemDisplayer : MonoBehaviour {
         item.itemObject = gameObject;
         nameTMP = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         imageRenderer = GetComponent<RawImage>();
+        dragHandler = GetComponent<DragHandler>();
 
         nameTMP.text = item.name;
         imageRenderer.texture = item.sprite;
+    }
+
+    public void DisableItem() {
+        dragHandler.canBeMoved = false;
+        imageRenderer.color = new Color(1, 1, 1, 0.5f);
+        nameTMP.color = new Color(1, 1, 1, 0.5f);
     }
 }

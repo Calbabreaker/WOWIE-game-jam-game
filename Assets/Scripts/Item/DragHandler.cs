@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
@@ -9,22 +10,42 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private GameObject grid;
     private ItemDisplayer itemDisplayer;
 
+    public bool canBeMoved = true;
+
     private void Start() {
         itemDisplayer = GetComponent<ItemDisplayer>();
         rectTransform = GetComponent<RectTransform>();
         itemDragerParent = GameObject.FindGameObjectWithTag("ItemDragerParent");
-        print(itemDragerParent);
         workSpace = GameObject.FindGameObjectWithTag("WorkSpace");
         grid = GameObject.FindGameObjectWithTag("Grid");
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        transform.SetParent(itemDragerParent.transform);
-        Crafting.inst.mouseHoldingItem = itemDisplayer.item;
+        if (canBeMoved) {
+            if (transform.parent.parent.name == "Crafting") {
+                CraftingPanels craftingPanels = transform.parent.GetComponent<CraftingPanels>();
+                if (craftingPanels.isOutput) {
+                    if (Crafting.inst.GetOutputSlot(craftingPanels.slotNumber) != null) {
+                        if (Crafting.inst.GetOutputSlot(craftingPanels.slotNumber).itemObject.GetComponent<DragHandler>().canBeMoved) {
+                            Inventory.inst.AddNewDiscoveredItem(Crafting.inst.GetOutputSlot(craftingPanels.slotNumber));
+                            Crafting.inst.SetOutputSlot(craftingPanels.slotNumber, null);
+                        }
+                    }
+                } else {
+                    if (Crafting.inst.GetInputSlot(craftingPanels.slotNumber) != null) {
+                        Crafting.inst.SetInputSlot(craftingPanels.slotNumber, null);
+                        Crafting.inst.triedCraftingRecipe = false;
+                    }
+                }
+            }
+
+            transform.SetParent(itemDragerParent.transform);
+            Crafting.inst.mouseHoldingItem = itemDisplayer.item;
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {
-        rectTransform.position = Input.mousePosition;
+        if (canBeMoved)rectTransform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData) {

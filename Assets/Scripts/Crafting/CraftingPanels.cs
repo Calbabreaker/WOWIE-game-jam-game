@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CraftingPanels : MonoBehaviour, IDropHandler, IBeginDragHandler {
-    public sbyte slotNumber;
+public class CraftingPanels : MonoBehaviour, IDropHandler {
+    public byte slotNumber;
     public bool canBePlacedIn;
+    public bool isOutput;
 
     private GameObject itemDragerParent;
 
@@ -21,13 +22,6 @@ public class CraftingPanels : MonoBehaviour, IDropHandler, IBeginDragHandler {
 
             Crafting.inst.SetInputSlot(slotNumber, Crafting.inst.mouseHoldingItem);
             Crafting.inst.mouseHoldingItem = null;
-            Crafting.inst.triedCraftingRecipe = false;
-        }
-    }
-
-    public void OnBeginDrag(PointerEventData eventDate) {
-        if (Crafting.inst.GetInputSlot(slotNumber) != null) {
-            Crafting.inst.SetInputSlot(slotNumber, null);
             Crafting.inst.triedCraftingRecipe = false;
         }
     }
