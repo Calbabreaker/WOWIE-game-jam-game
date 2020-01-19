@@ -8,7 +8,7 @@ public class Crafting : MonoBehaviour {
     private Item[] inputSlots = new Item[2];
     private Item[] outputSlots = new Item[2];
 
-    [HideInInspector] public bool triedCraftingRecipe = false;
+    [HideInInspector] public bool justTriedCraftingRecipe = false;
 
     public static Crafting inst;
 
@@ -21,7 +21,7 @@ public class Crafting : MonoBehaviour {
     }
 
     public void Update() {
-        if (inputSlots[0] != null && inputSlots[1] != null && !triedCraftingRecipe) {
+        if (inputSlots[0] != null && inputSlots[1] != null && !justTriedCraftingRecipe && outputSlots[0] == null && outputSlots[1] == null) {
             foreach (Recipe recipe in inputSlots[0].recipes) {
                 if (recipe.inputItems[0].name == inputSlots[1].name || recipe.inputItems[1].name == inputSlots[1].name) {
                     NewItem(recipe, 0);
@@ -30,18 +30,20 @@ public class Crafting : MonoBehaviour {
                         NewItem(recipe, 1);
                     }
 
-                    triedCraftingRecipe = true;
+                    justTriedCraftingRecipe = true;
                     return;
                 }
             }
 
-            triedCraftingRecipe = true;
+            inputSlots[0].itemObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("RecipeNotFound");
+            inputSlots[1].itemObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("RecipeNotFound");
+            justTriedCraftingRecipe = true;
         }
     }
 
     private Item NewItem(Recipe recipe, byte slotNumber) {
         GameObject itemObject = Instantiate(itemObjectPrefab, outputSlotObjects[slotNumber].transform.position, Quaternion.identity, outputSlotObjects[0].transform);
-        ItemDisplayer itemDisplayer = itemObject.GetComponent<ItemDisplayer>();
+        ItemDisplayer itemDisplayer = itemObject.transform.GetChild(0).GetComponent<ItemDisplayer>();
         itemDisplayer.item = recipe.resultItems[slotNumber];
         itemDisplayer.item.itemObject = itemObject;
         SetOutputSlot(slotNumber, itemDisplayer.item);

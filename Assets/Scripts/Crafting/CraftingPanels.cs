@@ -22,7 +22,7 @@ public class CraftingPanels : MonoBehaviour, IDropHandler {
 
             Crafting.inst.SetInputSlot(slotNumber, Crafting.inst.mouseHoldingItem);
             Crafting.inst.mouseHoldingItem = null;
-            Crafting.inst.triedCraftingRecipe = false;
+            Crafting.inst.justTriedCraftingRecipe = false;
         }
     }
 }

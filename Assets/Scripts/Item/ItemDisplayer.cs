@@ -10,16 +10,17 @@ public class ItemDisplayer : MonoBehaviour {
     public Item item;
 
     private void Start() {
-        item.itemObject = gameObject;
+        item.itemObject = transform.parent.gameObject;
         nameTMP = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         imageRenderer = GetComponent<RawImage>();
-        dragHandler = GetComponent<DragHandler>();
+        dragHandler = transform.parent.GetComponent<DragHandler>();
 
         nameTMP.text = item.name;
         imageRenderer.texture = item.sprite;
     }
 
     public void DisableItem() {
+        Start();
         dragHandler.canBeMoved = false;
         imageRenderer.color = new Color(1, 1, 1, 0.5f);
         nameTMP.color = new Color(1, 1, 1, 0.5f);

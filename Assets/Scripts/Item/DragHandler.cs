@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
@@ -13,7 +12,7 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public bool canBeMoved = true;
 
     private void Start() {
-        itemDisplayer = GetComponent<ItemDisplayer>();
+        itemDisplayer = transform.GetChild(0).GetComponent<ItemDisplayer>();
         rectTransform = GetComponent<RectTransform>();
         itemDragerParent = GameObject.FindGameObjectWithTag("ItemDragerParent");
         workSpace = GameObject.FindGameObjectWithTag("WorkSpace");
@@ -34,7 +33,18 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 } else {
                     if (Crafting.inst.GetInputSlot(craftingPanels.slotNumber) != null) {
                         Crafting.inst.SetInputSlot(craftingPanels.slotNumber, null);
-                        Crafting.inst.triedCraftingRecipe = false;
+                        Crafting.inst.justTriedCraftingRecipe = false;
+
+                        if (Crafting.inst.GetOutputSlot(0) != null) {
+                            GameObject itemObjectOutput1 = Crafting.inst.GetOutputSlot(0).itemObject;
+                            Destroy(itemObjectOutput1);
+                            Crafting.inst.SetOutputSlot(0, null);
+                            if (Crafting.inst.GetOutputSlot(1) != null) {
+                                GameObject itemObjectOutput2 = Crafting.inst.GetOutputSlot(1).itemObject;
+                                Destroy(itemObjectOutput2);
+                                Crafting.inst.SetOutputSlot(1, null);
+                            }
+                        }
                     }
                 }
             }
@@ -45,7 +55,7 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (canBeMoved)rectTransform.position = Input.mousePosition;
+        if (canBeMoved) rectTransform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData) {

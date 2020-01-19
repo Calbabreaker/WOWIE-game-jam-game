@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 
 public class Inventory : MonoBehaviour {
-    [HideInInspector] public List<Item> discoveredItems = new List<Item>(0);
+    public List<Item> discoveredItems = new List<Item>(0);
     public int totalAmountOfItems;
 
     private TextMeshProUGUI amountOfItemsText;
