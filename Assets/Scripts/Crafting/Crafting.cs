@@ -18,7 +18,7 @@ public class Crafting : MonoBehaviour {
     }
 
     private void Start() {
-        outputSlotObject = transform.Find("CraftingOutput1").gameObject;
+        outputSlotObject = transform.Find("CraftingOutput").gameObject;
     }
 
     public void Update() {
@@ -49,9 +49,9 @@ public class Crafting : MonoBehaviour {
         ItemDisplayer itemDisplayer = itemObject.transform.GetChild(0).GetComponent<ItemDisplayer>();
         Animator animator = itemDisplayer.GetComponent<Animator>();
         itemDisplayer.item = recipe.resultItems[slotNumber];
+        SetOutputSlot(itemDisplayer.item);
         itemDisplayer.ActualStart();
         itemObject.GetComponent<DragHandler>().ActualStart();
-        SetOutputSlot(itemDisplayer.item);
 
         bool isItemInInventory = false;
         foreach (Item item in Inventory.inst.itemsInInventory) {
@@ -62,6 +62,8 @@ public class Crafting : MonoBehaviour {
                 break;
             }
         }
+
+        itemDisplayer.SetItemObject();
 
         if (!isItemInInventory) {
             animator.SetTrigger("NewItem");

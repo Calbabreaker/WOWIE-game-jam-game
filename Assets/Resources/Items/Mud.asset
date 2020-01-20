@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Mud
   sprite: {fileID: 2800000, guid: 4bc7045423522ab43a8e3f4355e2e108, type: 3}
-  discoverDescription: Squishy, Dirty and Wet!
+  discoverDescription: Squishy, Dirty and Wet! Perfect for glueing things.
   recipes:
   - {fileID: 11400000, guid: 0eba7f94d9658624591b3804b6f94c38, type: 2}
   itemObject: {fileID: 0}

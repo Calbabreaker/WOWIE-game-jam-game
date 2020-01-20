@@ -11,4 +11,6 @@ public class Item : ScriptableObject {
 
     [HideInInspector]
     public GameObject itemObject;
+    [HideInInspector]
+    public GameObject disabledItemObject;
 }

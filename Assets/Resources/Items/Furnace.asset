@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Furnace
   sprite: {fileID: 2800000, guid: d02e397fb00b41a4caec8b270821ff67, type: 3}
-  discoverDescription: A item to smelt or cook things!
-  recipes: []
+  discoverDescription: An item to smelt or cook things!
+  recipes:
+  - {fileID: 11400000, guid: 0ce5308aa77ff98449fc4e530ab39ac5, type: 2}
+  - {fileID: 11400000, guid: 9d7e6fb7ab49b0b4ca9d4b10a7b01c1f, type: 2}
   itemObject: {fileID: 0}

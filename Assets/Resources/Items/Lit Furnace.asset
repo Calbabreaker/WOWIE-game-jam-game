@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8a630f8ed7c54f4facea6919fbf01fe, type: 3}
-  m_Name: Coal
+  m_Name: Lit Furnace
   m_EditorClassIdentifier: 
-  name: Coal
-  sprite: {fileID: 2800000, guid: 390e8609cc0aa2840803cd7370739073, type: 3}
-  discoverDescription: Made from healthy plants!
+  name: Lit Furnace
+  sprite: {fileID: 2800000, guid: b3162eb7b3335b144876a97e64ea4fd8, type: 3}
+  discoverDescription: It's lit!
   recipes:
-  - {fileID: 11400000, guid: 0ce5308aa77ff98449fc4e530ab39ac5, type: 2}
+  - {fileID: 11400000, guid: 28b7160075dc14341aa1cc45d3a59fdd, type: 2}
+  - {fileID: 11400000, guid: bf34be72bab2ed2459ff4595543e0f43, type: 2}
   itemObject: {fileID: 0}

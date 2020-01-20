@@ -15,5 +15,6 @@ MonoBehaviour:
   name: Iron Ore
   sprite: {fileID: 2800000, guid: e06f56dac181e974aaa8b15f0d5a3e52, type: 3}
   discoverDescription: Becomes shiny if you smelt it.
-  recipes: []
+  recipes:
+  - {fileID: 11400000, guid: 28b7160075dc14341aa1cc45d3a59fdd, type: 2}
   itemObject: {fileID: 0}

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
+public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler {
     private RectTransform rectTransform;
     private GameObject itemDragerParent;
     private GameObject workSpace;
@@ -36,7 +36,9 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 CraftingPanels craftingPanels = transform.parent.GetComponent<CraftingPanels>();
                 if (craftingPanels.isOutput) {
                     if (Crafting.inst.GetOutputSlot() != null) {
-                        if (Crafting.inst.GetOutputSlot().itemObject.GetComponent<DragHandler>().canBeMoved) {
+                        GameObject itemObjectOutput = Crafting.inst.GetOutputSlot().disabledItemObject == null ? Crafting.inst.GetOutputSlot().itemObject : Crafting.inst.GetOutputSlot().disabledItemObject;
+                        print(itemObjectOutput.GetComponent<DragHandler>().canBeMoved);
+                        if (itemObjectOutput.GetComponent<DragHandler>().canBeMoved) {
                             animator.SetTrigger("Stop");
                             Inventory.inst.AddNewItemInInventory(Crafting.inst.GetOutputSlot());
                             Crafting.inst.SetOutputSlot(null);
@@ -49,14 +51,12 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                         Crafting.inst.itemInQueuRecipe = null;
 
                         if (Crafting.inst.GetOutputSlot() != null) {
-                            GameObject itemObjectOutput1 = Crafting.inst.GetOutputSlot().itemObject;
-                            Destroy(itemObjectOutput1);
+                            
+                            GameObject itemObjectOutput = Crafting.inst.GetOutputSlot().disabledItemObject == null ? Crafting.inst.GetOutputSlot().itemObject : Crafting.inst.GetOutputSlot().disabledItemObject;
+
+                            Destroy(itemObjectOutput);
+                            Crafting.inst.GetOutputSlot().disabledItemObject = null;
                             Crafting.inst.SetOutputSlot(null);
-                            if (Crafting.inst.GetOutputSlot() != null) {
-                                GameObject itemObjectOutput2 = Crafting.inst.GetOutputSlot().itemObject;
-                                Destroy(itemObjectOutput2);
-                                Crafting.inst.SetOutputSlot(null);
-                            }
                         }
                     }
                 }
@@ -85,14 +85,5 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
             Crafting.inst.NewItemFromRecipe(Crafting.inst.itemInQueuRecipe, 1);
             Crafting.inst.itemInQueuRecipe = null;
         }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData) {
-        //print("mousey");
-        rawImage.color = new Color(0.8f, 0.8f, 0.8f);
-    }
-
-    public void OnPointerExit(PointerEventData eventData) {
-        rawImage.color = new Color(1, 1, 1);
     }
 }

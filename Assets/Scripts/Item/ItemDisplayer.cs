@@ -16,7 +16,6 @@ public class ItemDisplayer : MonoBehaviour {
     }
 
     public void ActualStart() {
-        item.itemObject = transform.parent.gameObject;
         nameTMP = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         imageRenderer = GetComponent<RawImage>();
         dragHandler = transform.parent.GetComponent<DragHandler>();
@@ -29,5 +28,13 @@ public class ItemDisplayer : MonoBehaviour {
         dragHandler.canBeMoved = false;
         imageRenderer.color = new Color(1, 1, 1, 0.5f);
         nameTMP.color = new Color(1, 1, 1, 0.5f);
+    }
+
+    public void SetItemObject() {
+        if (dragHandler.canBeMoved) {
+            item.itemObject = transform.parent.gameObject;
+        } else {
+            item.disabledItemObject = transform.parent.gameObject;
+        }
     }
 }
