@@ -3,10 +3,11 @@
 public class Crafting : MonoBehaviour {
     [HideInInspector] public Item mouseHoldingItem;
     public GameObject itemObjectPrefab;
-    public GameObject[] outputSlotObjects = new GameObject[2];
+    public GameObject outputSlotObject;
+    public Recipe itemInQueuRecipe;
 
     private Item[] inputSlots = new Item[2];
-    private Item[] outputSlots = new Item[2];
+    private Item outputSlot;
 
     [HideInInspector] public bool justTriedCraftingRecipe = false;
 
@@ -17,18 +18,18 @@ public class Crafting : MonoBehaviour {
     }
 
     private void Start() {
-        outputSlotObjects[0] = transform.Find("CraftingOutput1").gameObject;
+        outputSlotObject = transform.Find("CraftingOutput1").gameObject;
     }
 
     public void Update() {
-        if (inputSlots[0] != null && inputSlots[1] != null && !justTriedCraftingRecipe && outputSlots[0] == null && outputSlots[1] == null) {
+        if (inputSlots[0] != null && inputSlots[1] != null && !justTriedCraftingRecipe && outputSlot == null && outputSlot == null) {
             foreach (Recipe recipe in inputSlots[0].recipes) {
                 if (recipe.inputItems[0].name == inputSlots[1].name || recipe.inputItems[1].name == inputSlots[1].name) {
-                    NewItem(recipe, 0);
-                    
                     if (recipe.resultItems.Count == 2) {
-                        NewItem(recipe, 1);
+                        itemInQueuRecipe = recipe;
                     }
+
+                    NewItemFromRecipe(recipe, 0);
 
                     justTriedCraftingRecipe = true;
                     return;
@@ -43,16 +44,39 @@ public class Crafting : MonoBehaviour {
         }
     }
 
-    private Item NewItem(Recipe recipe, byte slotNumber) {
-        GameObject itemObject = Instantiate(itemObjectPrefab, outputSlotObjects[slotNumber].transform.position, Quaternion.identity, outputSlotObjects[0].transform);
+    public Item NewItemFromRecipe(Recipe recipe, byte slotNumber) {
+        GameObject itemObject = Instantiate(itemObjectPrefab, outputSlotObject.transform.position, Quaternion.identity, outputSlotObject.transform);
         ItemDisplayer itemDisplayer = itemObject.transform.GetChild(0).GetComponent<ItemDisplayer>();
+        Animator animator = itemDisplayer.GetComponent<Animator>();
         itemDisplayer.item = recipe.resultItems[slotNumber];
-        itemDisplayer.item.itemObject = itemObject;
-        SetOutputSlot(slotNumber, itemDisplayer.item);
+        itemDisplayer.ActualStart();
+        itemObject.GetComponent<DragHandler>().ActualStart();
+        SetOutputSlot(itemDisplayer.item);
+
+        bool isItemInInventory = false;
         foreach (Item item in Inventory.inst.itemsInInventory) {
             if (item.name == itemDisplayer.item.name) {
+                isItemInInventory = true;
+                itemInQueuRecipe = null;
                 itemDisplayer.DisableItem();
+                break;
             }
+        }
+
+        if (!isItemInInventory) {
+            animator.SetTrigger("NewItem");
+        }
+
+        bool isItemInDiscoveredItems = false;
+        foreach (Item item in Inventory.inst.discoveredItems) {
+            if (item.name == itemDisplayer.item.name) {
+                isItemInDiscoveredItems = true;
+                break;
+            }
+        }
+
+        if (!isItemInDiscoveredItems) {
+            DiscoveredScreen.inst.ShowItemInDiscoveredScreen(itemDisplayer);
         }
 
         return itemDisplayer.item;
@@ -62,15 +86,15 @@ public class Crafting : MonoBehaviour {
         inputSlots[slot] = item;
     }
 
-    public void SetOutputSlot(byte slot, Item item) {
-        outputSlots[slot] = item;
+    public void SetOutputSlot(Item item) {
+        outputSlot = item;
     }
 
     public Item GetInputSlot(byte slot) {
         return inputSlots[slot];
     }
 
-    public Item GetOutputSlot(byte slot) {
-        return outputSlots[slot];
+    public Item GetOutputSlot() {
+        return outputSlot;
     }
 }

@@ -10,10 +10,18 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private GameObject grid;
     private ItemDisplayer itemDisplayer;
     private RawImage rawImage;
+    private Animator animator;
 
     public bool canBeMoved = true;
 
     private void Start() {
+        if (transform.childCount == 1) {
+            ActualStart();
+        }
+    }
+
+    public void ActualStart() {
+        animator = transform.GetChild(0).GetComponent<Animator>();
         itemDisplayer = transform.GetChild(0).GetComponent<ItemDisplayer>();
         rectTransform = GetComponent<RectTransform>();
         itemDragerParent = GameObject.FindGameObjectWithTag("ItemDragerParent");
@@ -27,25 +35,27 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
             if (transform.parent.parent.name == "Crafting") {
                 CraftingPanels craftingPanels = transform.parent.GetComponent<CraftingPanels>();
                 if (craftingPanels.isOutput) {
-                    if (Crafting.inst.GetOutputSlot(craftingPanels.slotNumber) != null) {
-                        if (Crafting.inst.GetOutputSlot(craftingPanels.slotNumber).itemObject.GetComponent<DragHandler>().canBeMoved) {
-                            Inventory.inst.AddNewItemInInventory(Crafting.inst.GetOutputSlot(craftingPanels.slotNumber));
-                            Crafting.inst.SetOutputSlot(craftingPanels.slotNumber, null);
+                    if (Crafting.inst.GetOutputSlot() != null) {
+                        if (Crafting.inst.GetOutputSlot().itemObject.GetComponent<DragHandler>().canBeMoved) {
+                            animator.SetTrigger("Stop");
+                            Inventory.inst.AddNewItemInInventory(Crafting.inst.GetOutputSlot());
+                            Crafting.inst.SetOutputSlot(null);
                         }
                     }
                 } else {
                     if (Crafting.inst.GetInputSlot(craftingPanels.slotNumber) != null) {
                         Crafting.inst.SetInputSlot(craftingPanels.slotNumber, null);
                         Crafting.inst.justTriedCraftingRecipe = false;
+                        Crafting.inst.itemInQueuRecipe = null;
 
-                        if (Crafting.inst.GetOutputSlot(0) != null) {
-                            GameObject itemObjectOutput1 = Crafting.inst.GetOutputSlot(0).itemObject;
+                        if (Crafting.inst.GetOutputSlot() != null) {
+                            GameObject itemObjectOutput1 = Crafting.inst.GetOutputSlot().itemObject;
                             Destroy(itemObjectOutput1);
-                            Crafting.inst.SetOutputSlot(0, null);
-                            if (Crafting.inst.GetOutputSlot(1) != null) {
-                                GameObject itemObjectOutput2 = Crafting.inst.GetOutputSlot(1).itemObject;
+                            Crafting.inst.SetOutputSlot(null);
+                            if (Crafting.inst.GetOutputSlot() != null) {
+                                GameObject itemObjectOutput2 = Crafting.inst.GetOutputSlot().itemObject;
                                 Destroy(itemObjectOutput2);
-                                Crafting.inst.SetOutputSlot(1, null);
+                                Crafting.inst.SetOutputSlot(null);
                             }
                         }
                     }
@@ -71,10 +81,14 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         yield return null;
         transform.SetParent(grid.transform);
         Crafting.inst.mouseHoldingItem = null;
+        if (Crafting.inst.itemInQueuRecipe != null) {
+            Crafting.inst.NewItemFromRecipe(Crafting.inst.itemInQueuRecipe, 1);
+            Crafting.inst.itemInQueuRecipe = null;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        print("mousey");
+        //print("mousey");
         rawImage.color = new Color(0.8f, 0.8f, 0.8f);
     }
 

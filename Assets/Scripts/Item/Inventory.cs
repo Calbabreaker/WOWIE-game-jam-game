@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour {
         amountOfItemsText.text = $"{itemsInInventory.Count}/{totalAmountOfItems}";
     }
 
-    public void ShowItemInDiscoveredScreen(Item item) {
-
+    public void AddNewDiscoveredItem(Item item) {
+        discoveredItems.Add(item);
     }
 }
