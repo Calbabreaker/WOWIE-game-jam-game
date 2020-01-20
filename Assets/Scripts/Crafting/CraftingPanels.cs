@@ -13,7 +13,7 @@ public class CraftingPanels : MonoBehaviour, IDropHandler {
     }
 
     public void OnDrop(PointerEventData eventDate) {
-        if (Crafting.inst.mouseHoldingItem != null && canBePlacedIn) {
+        if (Crafting.inst.mouseHoldingItem != null && canBePlacedIn && Crafting.inst.GetInputSlot(slotNumber) == null) {
             GameObject itemObject = Crafting.inst.mouseHoldingItem.itemObject;
             RectTransform rectTransform = itemObject.GetComponent<RectTransform>();
 

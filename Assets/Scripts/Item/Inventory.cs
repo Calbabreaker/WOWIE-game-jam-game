@@ -4,6 +4,7 @@ using TMPro;
 
 public class Inventory : MonoBehaviour {
     public List<Item> discoveredItems = new List<Item>(0);
+    public List<Item> itemsInInventory = new List<Item>(0);
     public int totalAmountOfItems;
 
     private TextMeshProUGUI amountOfItemsText;
@@ -16,11 +17,15 @@ public class Inventory : MonoBehaviour {
 
     private void Start() {
         amountOfItemsText = transform.Find("AmountOfItemsText").GetComponent<TextMeshProUGUI>();
-        amountOfItemsText.text = $"{discoveredItems.Count}/{totalAmountOfItems}";
+        amountOfItemsText.text = $"{itemsInInventory.Count}/{totalAmountOfItems}";
     }
 
-    public void AddNewDiscoveredItem(Item item) {
-        discoveredItems.Add(item);
-        amountOfItemsText.text = $"{discoveredItems.Count}/{totalAmountOfItems}";
+    public void AddNewItemInInventory(Item item) {
+        itemsInInventory.Add(item);
+        amountOfItemsText.text = $"{itemsInInventory.Count}/{totalAmountOfItems}";
+    }
+
+    public void ShowItemInDiscoveredScreen(Item item) {
+
     }
 }

@@ -35,8 +35,10 @@ public class Crafting : MonoBehaviour {
                 }
             }
 
-            inputSlots[0].itemObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("RecipeNotFound");
-            inputSlots[1].itemObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("RecipeNotFound");
+            Animator itemAnimator1 = inputSlots[0].itemObject.transform.GetChild(0).GetComponent<Animator>();
+            Animator itemAnimator2 = inputSlots[1].itemObject.transform.GetChild(0).GetComponent<Animator>();
+            itemAnimator1.SetTrigger("RecipeNotFound");
+            itemAnimator2.SetTrigger("RecipeNotFound");
             justTriedCraftingRecipe = true;
         }
     }
@@ -47,7 +49,7 @@ public class Crafting : MonoBehaviour {
         itemDisplayer.item = recipe.resultItems[slotNumber];
         itemDisplayer.item.itemObject = itemObject;
         SetOutputSlot(slotNumber, itemDisplayer.item);
-        foreach (Item item in Inventory.inst.discoveredItems) {
+        foreach (Item item in Inventory.inst.itemsInInventory) {
             if (item.name == itemDisplayer.item.name) {
                 itemDisplayer.DisableItem();
             }

@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler {
+public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
     private RectTransform rectTransform;
     private GameObject itemDragerParent;
     private GameObject workSpace;
     private GameObject grid;
     private ItemDisplayer itemDisplayer;
+    private RawImage rawImage;
 
     public bool canBeMoved = true;
 
@@ -17,6 +19,7 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         itemDragerParent = GameObject.FindGameObjectWithTag("ItemDragerParent");
         workSpace = GameObject.FindGameObjectWithTag("WorkSpace");
         grid = GameObject.FindGameObjectWithTag("Grid");
+        rawImage = transform.GetChild(0).GetComponent<RawImage>();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -26,7 +29,7 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 if (craftingPanels.isOutput) {
                     if (Crafting.inst.GetOutputSlot(craftingPanels.slotNumber) != null) {
                         if (Crafting.inst.GetOutputSlot(craftingPanels.slotNumber).itemObject.GetComponent<DragHandler>().canBeMoved) {
-                            Inventory.inst.AddNewDiscoveredItem(Crafting.inst.GetOutputSlot(craftingPanels.slotNumber));
+                            Inventory.inst.AddNewItemInInventory(Crafting.inst.GetOutputSlot(craftingPanels.slotNumber));
                             Crafting.inst.SetOutputSlot(craftingPanels.slotNumber, null);
                         }
                     }
@@ -68,5 +71,14 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         yield return null;
         transform.SetParent(grid.transform);
         Crafting.inst.mouseHoldingItem = null;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        print("mousey");
+        rawImage.color = new Color(0.8f, 0.8f, 0.8f);
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        rawImage.color = new Color(1, 1, 1);
     }
 }
