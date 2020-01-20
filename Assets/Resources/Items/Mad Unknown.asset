@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8a630f8ed7c54f4facea6919fbf01fe, type: 3}
-  m_Name: Iron
+  m_Name: Mad Unknown
   m_EditorClassIdentifier: 
-  name: Iron
-  sprite: {fileID: 2800000, guid: 02dc52900b74ca64283deabb3392f285, type: 3}
-  discoverDescription: Shiny and quit useful!
+  name: Mad Unkown
+  sprite: {fileID: 2800000, guid: 481e7af1decf5d94cbd20474d15088bc, type: 3}
+  discoverDescription: Uh Oh....
   recipes:
-  - {fileID: 11400000, guid: e116f5c60191b9e40821cd3c09a5032a, type: 2}
+  - {fileID: 11400000, guid: 88a33556dd1128741bf11283c7860790, type: 2}
   itemObject: {fileID: 0}
   disabledItemObject: {fileID: 0}

@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour {
     public List<Item> discoveredItems = new List<Item>(0);
     public List<Item> itemsInInventory = new List<Item>(0);
     public int totalAmountOfItems;
+    public Recipe unknownRecipe;
 
     private TextMeshProUGUI amountOfItemsText;
 
@@ -18,6 +19,13 @@ public class Inventory : MonoBehaviour {
     private void Start() {
         amountOfItemsText = transform.Find("AmountOfItemsText").GetComponent<TextMeshProUGUI>();
         amountOfItemsText.text = $"{itemsInInventory.Count}/{totalAmountOfItems}";
+    }
+
+    private void Update() {
+        if (itemsInInventory.Count == 10 && Crafting.inst.itemInQueuRecipe == null && unknownRecipe != null) {
+            Crafting.inst.itemInQueuRecipe = unknownRecipe;
+            unknownRecipe = null;
+        }
     }
 
     public void AddNewItemInInventory(Item item) {

@@ -17,4 +17,7 @@ MonoBehaviour:
   discoverDescription: It can mine!
   recipes:
   - {fileID: 11400000, guid: 7cf76ab382d1578449a4f49fc4c2e326, type: 2}
+  - {fileID: 11400000, guid: 8dfa8470710f1104db16379da4047d4a, type: 2}
+  - {fileID: 11400000, guid: 35d01e97bc0bf8a4c9eedcd6c935ca37, type: 2}
   itemObject: {fileID: 0}
+  disabledItemObject: {fileID: 0}

@@ -17,4 +17,6 @@ MonoBehaviour:
   discoverDescription: Squishy, Dirty and Wet! Perfect for glueing things.
   recipes:
   - {fileID: 11400000, guid: 0eba7f94d9658624591b3804b6f94c38, type: 2}
+  - {fileID: 11400000, guid: af22ee43203ec4443935e3e90e66927a, type: 2}
   itemObject: {fileID: 0}
+  disabledItemObject: {fileID: 0}

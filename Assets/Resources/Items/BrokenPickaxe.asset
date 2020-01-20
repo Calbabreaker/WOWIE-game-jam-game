@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8a630f8ed7c54f4facea6919fbf01fe, type: 3}
-  m_Name: Iron
+  m_Name: BrokenPickaxe
   m_EditorClassIdentifier: 
-  name: Iron
-  sprite: {fileID: 2800000, guid: 02dc52900b74ca64283deabb3392f285, type: 3}
-  discoverDescription: Shiny and quit useful!
-  recipes:
-  - {fileID: 11400000, guid: e116f5c60191b9e40821cd3c09a5032a, type: 2}
+  name: Broken Pickaxe
+  sprite: {fileID: 2800000, guid: 61c468295f59ad54f9fdfae5ac76b12d, type: 3}
+  discoverDescription: What?.. The Unkown broke it?! It must be strong.
+  recipes: []
   itemObject: {fileID: 0}
   disabledItemObject: {fileID: 0}

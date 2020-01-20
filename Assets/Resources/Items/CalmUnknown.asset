@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8a630f8ed7c54f4facea6919fbf01fe, type: 3}
-  m_Name: Iron
+  m_Name: CalmUnknown
   m_EditorClassIdentifier: 
-  name: Iron
-  sprite: {fileID: 2800000, guid: 02dc52900b74ca64283deabb3392f285, type: 3}
-  discoverDescription: Shiny and quit useful!
+  name: Calm Unknown
+  sprite: {fileID: 2800000, guid: 20dadca0841c2ab4cb33dcee332709e0, type: 3}
+  discoverDescription: Phew. That could have benn dangerous. On the side note this
+    thing eats grass?
   recipes:
-  - {fileID: 11400000, guid: e116f5c60191b9e40821cd3c09a5032a, type: 2}
+  - {fileID: 0}
   itemObject: {fileID: 0}
   disabledItemObject: {fileID: 0}

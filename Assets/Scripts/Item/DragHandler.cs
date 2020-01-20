@@ -37,7 +37,6 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 if (craftingPanels.isOutput) {
                     if (Crafting.inst.GetOutputSlot() != null) {
                         GameObject itemObjectOutput = Crafting.inst.GetOutputSlot().disabledItemObject == null ? Crafting.inst.GetOutputSlot().itemObject : Crafting.inst.GetOutputSlot().disabledItemObject;
-                        print(itemObjectOutput.GetComponent<DragHandler>().canBeMoved);
                         if (itemObjectOutput.GetComponent<DragHandler>().canBeMoved) {
                             animator.SetTrigger("Stop");
                             Inventory.inst.AddNewItemInInventory(Crafting.inst.GetOutputSlot());
@@ -82,7 +81,7 @@ public class DragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         transform.SetParent(grid.transform);
         Crafting.inst.mouseHoldingItem = null;
         if (Crafting.inst.itemInQueuRecipe != null) {
-            Crafting.inst.NewItemFromRecipe(Crafting.inst.itemInQueuRecipe, 1);
+            Crafting.inst.NewItemFromRecipe(Crafting.inst.itemInQueuRecipe, (byte)(Crafting.inst.itemInQueuRecipe.resultItems.Count - 1));
             Crafting.inst.itemInQueuRecipe = null;
         }
     }

@@ -17,4 +17,6 @@ MonoBehaviour:
   discoverDescription: 
   recipes:
   - {fileID: 11400000, guid: 5d778c0c434a8264fbb432fde73f66d6, type: 2}
+  - {fileID: 11400000, guid: af22ee43203ec4443935e3e90e66927a, type: 2}
   itemObject: {fileID: 0}
+  disabledItemObject: {fileID: 0}
