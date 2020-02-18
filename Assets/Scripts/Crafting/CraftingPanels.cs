@@ -15,6 +15,7 @@ public class CraftingPanels : MonoBehaviour, IDropHandler {
     public void OnDrop(PointerEventData eventDate) {
         if (Crafting.inst.mouseHoldingItem != null && canBePlacedIn && Crafting.inst.GetInputSlot(slotNumber) == null) {
             GameObject itemObject = Crafting.inst.mouseHoldingItem.disabledItemObject == null ? Crafting.inst.mouseHoldingItem.itemObject : Crafting.inst.mouseHoldingItem.disabledItemObject;
+            //print(Crafting.inst.mouseHoldingItem.itemObject);
             RectTransform rectTransform = itemObject.GetComponent<RectTransform>();
 
             itemObject.transform.SetParent(transform);

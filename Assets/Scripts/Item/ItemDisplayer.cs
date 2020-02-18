@@ -12,6 +12,7 @@ public class ItemDisplayer : MonoBehaviour {
     private void Start() {
         if (transform.parent.name != "ItemHolder") {
             ActualStart();
+            SetItemObject();
         }
     }
 
